@@ -13,13 +13,22 @@ search = function(movie, N){
   
   legendas <- c()
   
+  count = 0
   for(i in 1:length(file.names)){
     filename <- paste(PATH, file.names[i], sep="")
+    if(filename == movie){
+      count <- count + 1
+    }
     doc <- readChar(filename,file.info(filename)$size)
     legendas <- c(legendas, doc)
   }
   
+  if(count == 0){
+    return("Filme nao existe")
+  }
+  
   docs_teste <- c()
+  
   
   filmes_teste <- c(movie)
   docs_teste <- c()

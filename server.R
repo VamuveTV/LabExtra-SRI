@@ -12,7 +12,7 @@ source("scripts/buscar.R")
 
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output) {
-  
+
   # Return the requested dataset
   datasetInput <- reactive({
     switch(input$dataset,
@@ -22,18 +22,21 @@ shinyServer(function(input, output) {
   })
   
   # Generate a summary of the dataset
-  searchResult <- reactive({
-    if(identical(input$option,  "busca")){
-      search(input$search, input$N)
-    }
+  output$searchResult <- renderText({
+    input$button
+    isolate(input$option)
+    
   })
   
   # Show the first "n" observations
-  output$view <- renderTable({
-    data.frame(
+  output$searchView <- renderTable({
+    
+    input$button
+    
+    isolate(data.frame(
       Posição = c(1:input$N),
       Filmes = search(input$search, input$N),
       stringsAsFactors=FALSE
-    )
+    ))
   })
 })

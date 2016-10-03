@@ -8,7 +8,7 @@
 library(shiny)
 
 # Define UI for dataset viewer application
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
   
   # Application title.
   headerPanel("Laboratório Extra - Sistemas de Recuperação de Informação"),
@@ -22,11 +22,24 @@ shinyUI(pageWithSidebar(
   # to render output are inordinately time-consuming.
   sidebarPanel(
     selectInput("option", "Escolha uma opção:", 
-                list("Busca por filmes semelhantes" = "busca", 
-                     "Classificação de filmes" = "classificacao", 
-                     "Sistema de Recomendações" = "recomendacao")),
+                c("Busca por filmes semelhantes", 
+                  "Classificação de filmes", 
+                  "Sistema de Recomendações")),
     
-    textInput("search", "Digite sua busca: ", value = ""),
+    #textInput("search", "Digite sua busca: ", value = ""),
+    
+    conditionalPanel(
+      condition = "input.option != 'Sistema de Recomendações'",
+      textInput("search", "Digite sua busca: ", value = "")
+    ),
+    
+    conditionalPanel(
+      condition = "input.option == 'Sistema de Recomendações'",
+      checkboxGroupInput("dynamic", "Dynamic",
+                         choices = c("Option 1" = "option1",
+                                     "Option 2" = "option2"),
+                         selected = "option2")
+    ),
     
     numericInput("N", "Número de Resultados:", 10),
     
@@ -34,7 +47,10 @@ shinyUI(pageWithSidebar(
              "number of observations, the summary will still be based",
              "on the full dataset."),
     
-    submitButton("Buscar")
+    actionButton("button","Busca")
+    
+    #submitButton('Buscar')
+    
   ),
   
   # Show a summary of the dataset and an HTML table with the requested
@@ -42,6 +58,11 @@ shinyUI(pageWithSidebar(
   # an additional header above each output section.
   mainPanel(
     h4("Resultado"),
-    tableOutput("view")
+    
+    conditionalPanel(
+      condition = "input.option == 'Busca por filmes semelhantes'",
+      tableOutput("searchView")
+    )
+    
   )
 ))

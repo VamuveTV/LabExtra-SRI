@@ -3,10 +3,12 @@ library(FastKNN)
 
 PATH = "~/projeto/shinyApp/Legendas/"
 
-search = function(movie){
+search = function(movie, N){
   
+  if(identical(movie,  "")){
+    return("")
+  }
   
-  movie = "Ace Ventura Pet Detective.DVDRip.BugBunny.br.srt"
   file.names <- dir(PATH)
   
   legendas <- c()
@@ -43,17 +45,17 @@ search = function(movie){
   
   tfidf.matrix.treino = weightTfIdf(matrix.treino.stm)
   
-  treino <-  tfidf.matrix.treino[1:646, ]
+  treino <-  tfidf.matrix.treino[1:44, ]
   
-  teste1 <- tfidf.matrix.treino[647,]
+  teste1 <- tfidf.matrix.treino[45,]
   
   matriz.distancia1 <-  Distance_for_KNN_test(teste1, treino)
   
-  proximos1 <- k.nearest.neighbors(1,matriz.distancia1, k=n)
+  proximos1 <- k.nearest.neighbors(1,matriz.distancia1, k=N)
   
   filmes.proximos1 <- c()
   
-  for (j in 1:5){
+  for (j in 1:N){
     filmes.proximos1[j] <- file.names[proximos1[j]]
   }
   

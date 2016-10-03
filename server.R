@@ -22,12 +22,18 @@ shinyServer(function(input, output) {
   })
   
   # Generate a summary of the dataset
-  output$maior <- renderPrint({
-    search("Ace Ventura Pet Detective.DVDRip.BugBunny.br.srt")
+  searchResult <- reactive({
+    if(identical(input$option,  "busca")){
+      search(input$search, input$N)
+    }
   })
   
   # Show the first "n" observations
   output$view <- renderTable({
-    head(datasetInput(), n = input$obs)
+    data.frame(
+      Posição = c(1:input$N),
+      Filmes = search(input$search, input$N),
+      stringsAsFactors=FALSE
+    )
   })
 })

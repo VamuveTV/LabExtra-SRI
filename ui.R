@@ -41,7 +41,11 @@ shinyUI(fluidPage(
                          selected = "option2")
     ),
     
-    numericInput("N", "Número de Resultados:", 10),
+    conditionalPanel(
+      condition = "input.option != 'Classificação de filmes'",
+      numericInput("N", "Número de Resultados:", 10)
+    ),
+    
     
     helpText("Note: while the data view will show only the specified",
              "number of observations, the summary will still be based",
@@ -61,7 +65,12 @@ shinyUI(fluidPage(
     
     conditionalPanel(
       condition = "input.option == 'Busca por filmes semelhantes'",
-      tableOutput("searchView")
+      tableOutput("searchResult")
+    ),
+    
+    conditionalPanel(
+      condition = "input.option == 'Classificação de filmes'",
+      textOutput("classificationResult")
     )
     
   )

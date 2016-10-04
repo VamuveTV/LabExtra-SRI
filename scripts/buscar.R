@@ -1,7 +1,7 @@
 library(tm)
 library(FastKNN)
 
-PATH = "~/projeto/shinyApp/Legendas/"
+PATH = "~/projeto/shinyApp/legendas/"
 
 search = function(movie, N){
   
@@ -16,7 +16,7 @@ search = function(movie, N){
   count = 0
   for(i in 1:length(file.names)){
     filename <- paste(PATH, file.names[i], sep="")
-    if(filename == movie){
+    if(identical(movie,file.names[i])){
       count <- count + 1
     }
     doc <- readChar(filename,file.info(filename)$size)
@@ -43,7 +43,7 @@ search = function(movie, N){
   
   my.treino.corpus <- Corpus(my.treino)
   my.treino.corpus <- tm_map(my.treino.corpus, removePunctuation)
-  #my.treino.corpus <- tm_map(my.treino.corpus, removeWords, stopwords("portuguese"))
+  my.treino.corpus <- tm_map(my.treino.corpus, removeWords, stopwords("portuguese"))
   my.treino.corpus <- tm_map(my.treino.corpus, stemDocument)
   my.treino.corpus <- tm_map(my.treino.corpus, removeNumbers)
   my.treino.corpus <- tm_map(my.treino.corpus, stripWhitespace)
@@ -54,9 +54,11 @@ search = function(movie, N){
   
   tfidf.matrix.treino = weightTfIdf(matrix.treino.stm)
   
-  treino <-  tfidf.matrix.treino[1:44, ]
+  size <- length(legendas)
   
-  teste1 <- tfidf.matrix.treino[45,]
+  treino <-  tfidf.matrix.treino[1:size, ]
+  
+  teste1 <- tfidf.matrix.treino[size+1,]
   
   matriz.distancia1 <-  Distance_for_KNN_test(teste1, treino)
   

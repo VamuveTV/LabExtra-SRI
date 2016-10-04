@@ -8,6 +8,7 @@ library(shiny)
 library(datasets)
 
 source("scripts/buscar.R")
+source("scripts/classificacao.R")
 
 
 # Define server logic required to summarize and view the selected dataset
@@ -21,15 +22,8 @@ shinyServer(function(input, output) {
            "cars" = cars)
   })
   
-  # Generate a summary of the dataset
-  output$searchResult <- renderText({
-    input$button
-    isolate(input$option)
-    
-  })
-  
   # Show the first "n" observations
-  output$searchView <- renderTable({
+  output$searchResult <- renderTable({
     
     input$button
     
@@ -38,5 +32,13 @@ shinyServer(function(input, output) {
       Filmes = search(input$search, input$N),
       stringsAsFactors=FALSE
     ))
+  })
+  
+  # Show the first "n" observations
+  output$classificationResult <- renderText({
+    
+    input$button
+    
+    isolate(classificacao(input$search))
   })
 })

@@ -46,23 +46,21 @@ classificacao = function(movie){
   tfidf.matrix = weightTfIdf(term.doc.matrix.stm)
   colnames(tfidf.matrix) <- colnames(term.doc.matrix)
   
-  bourneIdentity <- 145
+  list.test.index <- list(movie.indice)
   
-  list.test.index <- list(bourneIdentity)
+  matrix.movie <- tfidf.matrix[movie.indice,]
   
-  mBourne <- tfidf.matrix[bourneIdentity,]
-  
-  list.test <- list(mBourne)
+  list.test <- list(matrix.movie)
   matrixTest <- do.call(rbind, list.test)
   
   matrixTrain <- tfidf.matrix
-  matrixTrain <- matrixTrain[-bourneIdentity,]
+  matrixTrain <- matrixTrain[-movie.indice,]
   
   distance_matrix <-  Distance_for_KNN_test(matrixTest, matrixTrain)
   
-  labels <- read.csv("~/projeto/shinyApp/Categorias_Filmes.csv", header=TRUE, sep=",") 
+  labels <- read.csv("Categorias_Filmes.csv", header=TRUE, sep=",") 
   
-  labels <- labels[-bourneIdentity,]
+  labels <- labels[-movie.indice,]
   
   matrixTest <- as.matrix(matrixTest) 
   

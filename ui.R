@@ -47,13 +47,11 @@ shinyUI(fluidPage(
     ),
     
     
-    helpText("Note: while the data view will show only the specified",
-             "number of observations, the summary will still be based",
-             "on the full dataset."),
+    helpText("Obs1: A opção 'Sistema de Recomendações' não foi implementada"),
+    helpText("Obs2: No campo de busca deve-se escrever o nome do arquivo de legenda"),
     
     actionButton("button","Busca")
     
-    #submitButton('Buscar')
     
   ),
   

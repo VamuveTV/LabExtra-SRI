@@ -5,6 +5,7 @@
 #
 
 library(shiny)
+library(rsconnect)
 library(datasets)
 
 source("scripts/buscar.R")

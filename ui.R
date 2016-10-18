@@ -6,6 +6,7 @@
 # runApp("~/projeto/shinyApp")
 
 library(shiny)
+library(rsconnect)
 
 # Define UI for dataset viewer application
 shinyUI(fluidPage(
@@ -38,9 +39,7 @@ shinyUI(fluidPage(
       numericInput("N", "Número de Resultados:", 10)
     ),
     
-    
-    helpText("Obs1: A opção 'Sistema de Recomendações' não foi implementada"),
-    helpText("Obs2: No campo de busca deve-se escrever o nome do arquivo de legenda"),
+    helpText("Obs: No campo de busca deve-se escrever o nome do arquivo de legenda"),
     
     conditionalPanel(
       condition = "input.option != 'Sistema de Recomendações'",

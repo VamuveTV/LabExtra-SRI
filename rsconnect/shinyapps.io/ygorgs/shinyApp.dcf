@@ -1,7 +1,8 @@
 name: shinyApp
+title:
 account: ygorgs
 server: shinyapps.io
 appId: 129360
-bundleId: 575797
+bundleId: 589208
 url: https://ygorgs.shinyapps.io/shinyApp/
-when: 1475544960.33156
+when: 1476757742.06312

@@ -1,9 +1,11 @@
 library(tm)
 library(FastKNN)
 
-PATH = "~/projeto/shinyApp/legendas/"
+PATH = paste(getwd(),"legendas/",sep = "/")
 
 search = function(movie, N){
+  
+  print("Buscando Filme")
   
   if(identical(movie,  "")){
     return("")

@@ -1,9 +1,11 @@
 library(tm)
 library(FastKNN)
 
-path = "~/projeto/shinyApp/legendas/"
+path = paste(getwd(),"legendas/",sep = "/")
 
 classificacao = function(movie){
+  
+  print("Classificando Filme")
   
   if(identical(movie,  "")){
     return("Digite o filme")

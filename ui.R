@@ -34,14 +34,6 @@ shinyUI(fluidPage(
     ),
     
     conditionalPanel(
-      condition = "input.option == 'Sistema de Recomendações'",
-      checkboxGroupInput("dynamic", "Dynamic",
-                         choices = c("Option 1" = "option1",
-                                     "Option 2" = "option2"),
-                         selected = "option2")
-    ),
-    
-    conditionalPanel(
       condition = "input.option != 'Classificação de filmes'",
       numericInput("N", "Número de Resultados:", 10)
     ),
@@ -50,8 +42,15 @@ shinyUI(fluidPage(
     helpText("Obs1: A opção 'Sistema de Recomendações' não foi implementada"),
     helpText("Obs2: No campo de busca deve-se escrever o nome do arquivo de legenda"),
     
-    actionButton("button","Busca")
+    conditionalPanel(
+      condition = "input.option != 'Sistema de Recomendações'",
+      actionButton("button","Busca")
+    ),
     
+    conditionalPanel(
+      condition = "input.option == 'Sistema de Recomendações'",
+      actionButton("button2", "Recomendar")
+    )
     
   ),
   
@@ -59,6 +58,12 @@ shinyUI(fluidPage(
   # number of observations. Note the use of the h4 function to provide
   # an additional header above each output section.
   mainPanel(
+    
+    conditionalPanel(
+      condition = "input.option == 'Sistema de Recomendações'",
+      uiOutput("recomendationChose")
+    ),
+    
     h4("Resultado"),
     
     conditionalPanel(
@@ -69,7 +74,11 @@ shinyUI(fluidPage(
     conditionalPanel(
       condition = "input.option == 'Classificação de filmes'",
       textOutput("classificationResult")
-    )
+    ),
     
+    conditionalPanel(
+      condition = "input.option == 'Sistema de Recomendações'",
+      uiOutput("recomendationResults")
+    )
   )
 ))

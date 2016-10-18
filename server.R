@@ -9,18 +9,11 @@ library(datasets)
 
 source("scripts/buscar.R")
 source("scripts/classificacao.R")
+source("scripts/recomendacao.R")
 
 
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output) {
-
-  # Return the requested dataset
-  datasetInput <- reactive({
-    switch(input$dataset,
-           "rock" = rock,
-           "pressure" = pressure,
-           "cars" = cars)
-  })
   
   # Show the first "n" observations
   output$searchResult <- renderTable({
@@ -41,4 +34,20 @@ shinyServer(function(input, output) {
     
     isolate(classificacao(input$search))
   })
+  
+  output$recomendationChose <- renderUI(
+    checkboxGroupInput("escolha", "Marque os filmes que você gosta:",
+                       choices = escolherFilmes())
+  )
+  
+  output$recomendationResults <- renderTable({
+    
+      input$button2
+      
+      isolate(data.frame(
+        Posição = c(1:input$N),
+        Filmes = recomendar(input$escolha, input$N),
+        stringsAsFactors=FALSE
+      ))
+    })
 })

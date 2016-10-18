@@ -50,17 +50,15 @@ recomendar = function(filmes, N){
       if(identical(filmes[j],arquivos[i])){
         indice.usuario <- indice.usuario + 1
         filmes.usuario[indice.usuario] <- i
-      }else{
-        indice.geral <- indice.geral + 1
-        nome <- paste(PATH, arquivos[i], sep="")
-        doc <- readChar(nome,file.info(nome)$size)
-        doc.lista[indice.geral] <- doc
       }
     }
+    if (!(i %in% filmes.usuario)) {
+      indice.geral <- indice.geral + 1
+      nome <- paste(PATH, arquivos[i], sep="")
+      doc <- readChar(nome,file.info(nome)$size)
+      doc.lista[indice.geral] <- doc
+    } 
   }
-  
-  print("o que tem aqui?")
-  print(filmes.usuario)
   
   # Documento que conterá o conteúdo de todos os filmes que o usuário demostrou interesse
   doc.usuario <- "" 
@@ -111,8 +109,8 @@ recomendar = function(filmes, N){
   similares <- k.nearest.neighbors(1,distance_matrix = matrixDistancia, k=TOP_K)
   
   filmes.recomendados = c()
-  print("Filmes Recomendados: ")
   for(i in 1:length(similares)){
     filmes.recomendados[i] <- arquivos[similares[i]]
   }
+  return(filmes.recomendados)
 }
